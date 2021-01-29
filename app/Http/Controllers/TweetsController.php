@@ -7,6 +7,19 @@ use App\Models\Tweet;
 
 class TweetsController extends Controller
 {
+
+    /**
+     * Show the application dashboard.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
+    public function index()
+    {
+        return view('tweets.index', [
+            'tweets' => auth()->user()->timeline()
+        ]);
+    }
+
     /**
      * salvando um novo tweet enviado pela view
      */

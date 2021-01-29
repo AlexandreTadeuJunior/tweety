@@ -1,6 +1,6 @@
 <ul>
     <li>
-        <a class="font-bold text-lg mb-4 block" href="/" >Home</a>
+        <a class="font-bold text-lg mb-4 block" href="{{ route('home') }}" >Home</a>
     </li>
     <li>
         <a class="font-bold text-lg mb-4 block" href="/" >Explore</a>
@@ -12,6 +12,6 @@
         <a class="font-bold text-lg mb-4 block" href="/" >Messagens</a>
     </li>
     <li>
-        <a class="font-bold text-lg mb-4 block" href="/" >Bookmarks</a>
+        <a class="font-bold text-lg mb-4 block" href="{{ route('profile', auth()->user()) }}" >Perfil</a>
     </li>
 </ul>

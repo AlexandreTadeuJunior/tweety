@@ -42,10 +42,18 @@ class User extends Authenticatable
     ];
 
     /**
-     * Função para retornar os tweets para o home
+     * Função para retornar os tweets postados por todos que o usuário segue
      */
     public function timeline() {
-        return Tweet::latest()->get();
+        // Pegando os IDs de quem o usuário segue
+        $friends = $this->follows()->pluck("id");
+
+        // Pegando todos os tweets por ordem de created
+        return Tweet::whereIn('user_id', $friends)->orWhere('user_id', $this->id)->latest()->get();
+    }
+
+    public function tweets() {
+        return $this->hasMany(Tweet::class);
     }
 
     // seguindo um novo usuário
@@ -60,5 +68,8 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'follows', 'user_id', 'following_user_id');
     }
 
+    public function getRouteKeyName() {
+        return 'name';
+    }
 
 }

@@ -1,5 +1,8 @@
 <?php
 
+// Mostrando a query que o laravel acabou de rodar
+// DB::listen(function ($query) { var_dump($query->sql, $query->bindings); });
+
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -17,8 +20,12 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::post('/tweets', [App\Http\Controllers\TweetsController::class, 'store']);
+Route::middleware('auth')->group(function() {
+    Route::get('/tweets', [App\Http\Controllers\TweetsController::class, 'index'])->name('home');
+    Route::post('/tweets', [App\Http\Controllers\TweetsController::class, 'store']);
+});
+
+Route::get('/profiles/{user}', [App\Http\Controllers\ProfilesController::class, 'show'])->name('profile');
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
